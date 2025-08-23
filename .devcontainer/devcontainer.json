@@ -1,7 +1,9 @@
 {
+  "name": "Python Chess Devcontainer",
   "build": {
     "context": "..",
     "dockerfile": "Dockerfile"
   },
-  "postCreateCommand": "scripts/setup"
+  "postCreateCommand": "scripts/setup",
+  "remoteUser": "root"
 }
