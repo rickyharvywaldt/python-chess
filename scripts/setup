@@ -1,6 +1,19 @@
 #!/bin/bash
+set -e
 
 /usr/local/bin/mise trust /workspaces/python-chess/mise.toml && /usr/local/bin/mise install
 
-sudo apt update && sudo apt install vim -y
+apt update && apt install vim -y
+
+if [ ! -f board.yaml ]; then
+  cat > board.yaml <<EOL
+fen: "startpos"
+moves: []
+game_over: false
+winner: null
+EOL
+  echo "Created initial board.yaml"
+else
+  echo "board.yaml already exists"
+fi
 
