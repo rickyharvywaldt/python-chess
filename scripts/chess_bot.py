@@ -1,5 +1,4 @@
 import chess
-import chess.engine
 import yaml
 import random
 
@@ -11,14 +10,19 @@ try:
         board_data = yaml.safe_load(f)
 except FileNotFoundError:
     # Create initial board if missing
-    board_data = {"fen": "startpos", "moves": [], "game_over": False, "winner": None}
+    board_data = {"fen": None, "moves": [], "game_over": False, "winner": None}
 
-board = chess.Board(board_data.get("fen", "startpos"))
+# Initialize board
+fen = board_data.get("fen")
+if fen is None or fen == "startpos":
+    board = chess.Board()  # start position
+else:
+    board = chess.Board(fen)
 
-# If game is over, exit
+# If game is over, mark it
 if board.is_game_over():
     board_data["game_over"] = True
-    result = board.result()  # e.g., "1-0", "0-1", "1/2-1/2"
+    result = board.result()  # "1-0", "0-1", "1/2-1/2"
     if result == "1-0":
         board_data["winner"] = "white"
     elif result == "0-1":
@@ -27,10 +31,9 @@ if board.is_game_over():
         board_data["winner"] = "draw"
     print("Game over! Result:", result)
 else:
-    # Generate bot move (simulate ~1100 Elo)
+    # Generate bot move (~1100 Elo via random legal move)
     legal_moves = list(board.legal_moves)
     if legal_moves:
-        # You can use random.choice to mimic 1100 Elo, or a weak engine if available
         move = random.choice(legal_moves)
         board.push(move)
         board_data["moves"].append(move.uci())
@@ -40,7 +43,7 @@ else:
         print("No legal moves available, game over.")
         board_data["game_over"] = True
 
-# Save board
+# Save updated board
 with open(BOARD_FILE, "w") as f:
     yaml.safe_dump(board_data, f)
 
