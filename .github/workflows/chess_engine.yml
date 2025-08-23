@@ -2,13 +2,16 @@ name: Chess Engine Move
 
 on:
   schedule:
-    - cron: '0 15-20 * * *' # GitHub Actions uses UTC, so 15-20 UTC ≈ 17-22 Amsterdam (summer)
-  workflow_dispatch: 
+    # Runs every day at a random minute between 17:00 and 22:00 Amsterdam time
+    - cron: "0 15-20 * * *" # UTC 15:00–20:59 = 17:00–22:59 Amsterdam (CEST)
+  workflow_dispatch: # allows manual trigger
+
+permissions:
+  contents: write
 
 jobs:
   make-move:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,16 +24,23 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install python-chess pyyaml
+          pip install -r requirements.txt
 
-      - name: Run Chess Engine
-        run: python scripts/chess_bot.py
+      - name: Run chess engine
+        run: |
+          python scripts/chess_bot.py
 
-      - name: Commit & Push Move
+      - name: Commit and push move
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add board.yaml
-          git commit -m "Chess engine move"
+          git commit -m "Chess engine move" || echo "No changes to commit"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify
+        run: |
+          echo "Chess engine made its move. Check board.yaml for updates."
 
