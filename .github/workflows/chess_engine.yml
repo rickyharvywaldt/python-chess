@@ -2,9 +2,9 @@ name: Chess Engine Move
 
 on:
   schedule:
-    # Runs daily at a random time between 17:00–22:59 Amsterdam time (UTC+2 → UTC 15–20)
+    # Runs every hour between 17:00–22:00 Amsterdam time (UTC 15–20)
     - cron: "0 15-20 * * *"
-  workflow_dispatch: # manual trigger
+  workflow_dispatch: # allow manual trigger
 
 permissions:
   contents: write
@@ -20,19 +20,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: "3.12"
 
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install python-chess
 
-      - name: Run chess engine via uv
-        run: |
-          # Activate mise and uv
-          curl -sSL https://raw.githubusercontent.com/jdxcode/mise/main/install.sh | bash
-          mise use uv
-          uv run python scripts/chess_bot.py
+      - name: Run chess engine
+        run: python scripts/chess_bot.py
 
       - name: Commit and push board.yaml
         run: |
@@ -45,5 +41,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify
-        run: echo "Chess engine made its move. Check board.yaml for updates."
+        run: echo "✅ Chess engine made its move. Check board.yaml for updates."
 
