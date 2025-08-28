@@ -1,4 +1,4 @@
-fen: 1nq2bnr/rp2p1p1/2pp3p/1p3p2/P1PP1kP1/5N1b/2Q1PP1P/RN2KB1R w K - 6 19
+fen: 1nq2bnr/rp2p1p1/2pp3p/1p3p2/P1PP1kP1/2Q2N1b/4PP1P/RN2KB1R b K - 7 19
 game_over: false
 moves:
 - a2a4
@@ -38,4 +38,5 @@ moves:
 - d7b8
 - h4f3
 - g5f4
+- c2c3
 winner: null
