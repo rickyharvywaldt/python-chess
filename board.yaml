@@ -1,4 +1,4 @@
-fen: 6nr/4b3/3p2p1/1p1PkpP1/7p/4rP1B/2QNP2P/3KN1R1 w - - 2 46
+fen: 6nr/4b3/3p2p1/1p1PkpP1/7p/4rP1B/2Q1P2P/3KNNR1 b - - 3 46
 game_over: false
 moves:
 - a2a4
@@ -92,4 +92,5 @@ moves:
 - b6b5
 - a2c2
 - h7h8
+- d2f1
 winner: null
