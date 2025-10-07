@@ -1,4 +1,4 @@
-fen: 1Nr5/1k6/3P2p1/6PB/8/5nNp/K6P/8 b - - 12 137
+fen: kNr5/8/3P2p1/6PB/8/5nNp/K6P/8 w - - 13 138
 game_over: false
 moves:
 - a2a4
@@ -275,4 +275,5 @@ moves:
 - f1g3
 - e8c8
 - g4h5
+- b7a8
 winner: null
