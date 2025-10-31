@@ -1,5 +1,5 @@
 fen: 2k5/8/2KQ4/8/8/3N3p/7P/8 b - - 26 210
-game_over: false
+game_over: true
 moves:
 - a2a4
 - e2e4
@@ -421,4 +421,4 @@ moves:
 - e6d6
 - c7c8
 - b5c6
-winner: null
+winner: draw
